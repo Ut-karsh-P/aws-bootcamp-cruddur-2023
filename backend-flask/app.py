@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
+import sys
 
 from services.home_activities import *
 from services.notifications_activities import *
@@ -60,7 +61,10 @@ from flask import got_request_exception
 
 
 app = Flask(__name__)
-
+app.config['ENV'] = 'development'
+app.config['DEBUG'] = True
+app.config['TESTING'] = True
+app.debug = True
 
 # X-RAY --------------------
 # xray_url = os.getenv("AWS_XRAY_URL")
@@ -81,10 +85,11 @@ origins = [frontend, backend]
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
-  expose_headers="location,link",
-  allow_headers="content-type,if-modified-since",
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
 )
+
 
 
 # @app.after_request
@@ -150,6 +155,9 @@ def data_create_message():
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
+  sys.stdout.write('LOG PLEASE')
+  print('PLEASE LOG')
+  app.logger.debug("AUTH HEADER LOG")
   data = HomeActivities.run()
   return data, 200
 
