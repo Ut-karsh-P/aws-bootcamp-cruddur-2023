@@ -1,4 +1,11 @@
 #! /usr/bin/bash
 echo "db connect bash"
 
-psql $CONNECTION_URL
+if [ "$1" = "prod" ]; then
+    echo "using prod url"
+    URL=$PROD_CONNECTION_URL
+else
+    URL=$CONNECTION_URL
+fi
+
+psql $URL
