@@ -1,5 +1,16 @@
 # FREE AWS Cloud Project Bootcamp
 
+# Note for me.....
+bin/ddb/schema-load
+
+
+
+
+# do on gitpod
+root/backend-flask $ chmod u+x bin/ddb/schema-load
+
+
+# ----------------
 - Application: Cruddur
 - Cohort: 2023-A1
 
